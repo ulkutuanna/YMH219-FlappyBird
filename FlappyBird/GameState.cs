@@ -4,7 +4,7 @@ public class GameState
 {
     private const int BaseSpeed = 5;      
     private const int MaxSpeed = 12;     
-    private const int PointsPerLevel = 5;   
+    private const int PointsPerLevel = 5; 
 
     public int Score { get; private set; }
     public int Level { get; private set; } = 1;
@@ -24,7 +24,5 @@ public class GameState
         Level = 1;
         Speed = BaseSpeed;
         IsGameOver = false;
-    }
-            public int HighScore { get; set;
     }
 }

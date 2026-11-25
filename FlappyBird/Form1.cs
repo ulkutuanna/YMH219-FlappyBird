@@ -4,8 +4,6 @@ namespace FlappyBird
     {
         private Bird bird;
         private GameState game = new GameState();
-
-        private HighScoreStorage storage = new HighScoreStorage();
         private List<Pipe> pipes = new List<Pipe>();
 
         private const int PipeCount = 3;
@@ -38,14 +36,9 @@ namespace FlappyBird
             picGround.BringToFront();
             picBird.BringToFront();
             lblScore.BringToFront();
-            game.HighScore = storage.Load();
+
             ResetGame();
         }
-        private void UpdateScoreLabel()
-        {
-            lblScore.Text = $"Skor: {game.Score}  Seviye: {game.Level}  Rekor: {game.HighScore}";
-        }
-
 
         private void ResetGame()
         {
@@ -59,7 +52,7 @@ namespace FlappyBird
                 pipes[i].Reset(500 + i * PipeSpacing, previousGapTop);
             }
 
-            UpdateScoreLabel();
+            lblScore.Text = "Skor: 0  Seviye: 1";
             lblGameOver.Visible = false;
             btnRestart.Visible = false;
 
@@ -71,12 +64,6 @@ namespace FlappyBird
         {
             game.IsGameOver = true;
             gameTimer.Stop();
-            if (game.Score > game.HighScore)
-            {
-                game.HighScore = game.Score;
-                storage.Save(game.HighScore);
-                UpdateScoreLabel();
-            }
 
             lblGameOver.Left = (this.ClientSize.Width - lblGameOver.Width) / 2;
             lblGameOver.Top = 250;
@@ -122,7 +109,7 @@ namespace FlappyBird
                 {
                     pipe.Passed = true;
                     game.AddScore();
-                    UpdateScoreLabel();
+                    lblScore.Text = $"Skor: {game.Score}  Seviye: {game.Level}";
                 }
             }
 

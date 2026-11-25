@@ -62,10 +62,10 @@
             // 
             lblScore.AutoSize = true;
             lblScore.BackColor = Color.Transparent;
-            lblScore.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 162);
+            lblScore.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 162);
             lblScore.Location = new Point(0, 0);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(93, 31);
+            lblScore.Size = new Size(139, 46);
             lblScore.TabIndex = 2;
             lblScore.Text = "Skor : 0 ";
             // 
