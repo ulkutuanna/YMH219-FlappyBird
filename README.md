@@ -24,12 +24,21 @@ tabanlı bir yapı ile yönetmek.
 - Her geçilen boru 1 puan kazandırır, her 5 puanda seviye artar ve oyun hızlanır.
 - Boruya veya zemine çarpınca oyun biter. **Restart** düğmesiyle yeniden başlanır.
 
+## Ek Özellikler (İsteğe Bağlı Geliştirmeler)
+
+- **En yüksek skor:** Rekor `highscore.txt` dosyasında saklanır, oyun kapatılıp açılsa da korunur.
+- **Seviye sistemi:** Her 5 puanda seviye artar, borular hızlanır.
+- **Ses efektleri:** Puan alınca ve çarpınca sistem sesi çalar. **M** tuşu sesi açıp kapatır.
+- **Kodla çizilen görseller:** Kuş, borular, zemin ve arka plan `SpriteFactory` sınıfı ile çizilmiştir.
+
 ## Sınıf Yapısı
 
 - `Bird`: Kuşun konumu, hızı, yerçekimi ve zıplama.
 - `Pipe`: Üst/alt boru, hareket, çarpışma ve yeniden konumlandırma.
 - `GameState`: Skor, seviye, oyun hızı ve oyunun bitip bitmediği.
 - `Form1`: Timer döngüsü, klavye olayları ve oyun akışı.
+- `HighScoreStorage`: En yüksek skorun dosyaya yazılması ve okunması.
+- `SpriteFactory`: Oyun görsellerinin kodla çizilmesi.
 
 ## Çalıştırma Adımları
 
