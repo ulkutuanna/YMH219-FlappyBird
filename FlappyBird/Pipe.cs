@@ -51,8 +51,16 @@ public class Pipe
         BottomPipe.Left = x;
         BottomPipe.Top = GapTop + Gap;
         BottomPipe.Height = groundTop - (GapTop + Gap);
+        SetImage(TopPipe, true);      
+        SetImage(BottomPipe, false); 
 
         Passed = false;
+    }
+    
+    private static void SetImage(PictureBox box, bool capAtBottom)
+    {
+        box.Image?.Dispose();   
+        box.Image = SpriteFactory.CreatePipe(box.Width, box.Height, capAtBottom);
     }
 
     public void Move(int speed)

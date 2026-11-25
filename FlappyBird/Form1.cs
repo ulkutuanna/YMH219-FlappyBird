@@ -4,17 +4,19 @@ namespace FlappyBird
     {
         private Bird bird;
         private GameState game = new GameState();
+        private HighScoreStorage storage = new HighScoreStorage();
         private List<Pipe> pipes = new List<Pipe>();
 
         private const int PipeCount = 3;
-        private const int PipeSpacing = 320;    
+        private const int PipeSpacing = 320;
         private const int BirdStartTop = 300;
+
+        private bool soundOn = true;
 
         public Form1()
         {
             InitializeComponent();
 
-            
             this.ClientSize = new Size(500, 700);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -22,9 +24,26 @@ namespace FlappyBird
             this.KeyDown += Form1_KeyDown;
             btnRestart.Click += btnRestart_Click;
 
-           
             picGround.Size = new Size(500, 80);
             picGround.Location = new Point(0, this.ClientSize.Height - picGround.Height);
+
+            this.DoubleBuffered = true;
+            this.BackgroundImage = SpriteFactory.CreateBackground(500, 700);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            picBird.Size = new Size(40, 30);
+            picBird.SizeMode = PictureBoxSizeMode.StretchImage;
+            picBird.BackColor = Color.Transparent;
+            picBird.Image = SpriteFactory.CreateBird(40, 30);
+
+            picGround.SizeMode = PictureBoxSizeMode.StretchImage;
+            picGround.Image = SpriteFactory.CreateGround(500, 80);
+
+            lblScore.AutoSize = true;
+            lblScore.Font = new Font("Segoe UI", 13, FontStyle.Bold);
+            lblScore.ForeColor = Color.DarkSlateBlue;
+            lblScore.BackColor = Color.Transparent;
+            lblScore.Location = new Point(10, 10);
 
             bird = new Bird(picBird);
 
@@ -37,7 +56,19 @@ namespace FlappyBird
             picBird.BringToFront();
             lblScore.BringToFront();
 
+            game.HighScore = storage.Load();
             ResetGame();
+        }
+        private void PlaySound(System.Media.SystemSound sound)
+        {
+            if (soundOn)
+            {
+                sound.Play();
+            }
+        }
+        private void UpdateScoreLabel()
+        {
+            lblScore.Text = $"Skor: {game.Score}   Seviye: {game.Level}   Rekor: {game.HighScore}";
         }
 
         private void ResetGame()
@@ -45,14 +76,13 @@ namespace FlappyBird
             game.Reset();
             bird.Reset(BirdStartTop);
 
-           
             for (int i = 0; i < pipes.Count; i++)
             {
                 int? previousGapTop = i == 0 ? null : pipes[i - 1].GapTop;
                 pipes[i].Reset(500 + i * PipeSpacing, previousGapTop);
             }
 
-            lblScore.Text = "Skor: 0  Seviye: 1";
+            UpdateScoreLabel();
             lblGameOver.Visible = false;
             btnRestart.Visible = false;
 
@@ -64,6 +94,14 @@ namespace FlappyBird
         {
             game.IsGameOver = true;
             gameTimer.Stop();
+            PlaySound(System.Media.SystemSounds.Hand);
+
+            if (game.Score > game.HighScore)
+            {
+                game.HighScore = game.Score;
+                storage.Save(game.HighScore);
+                UpdateScoreLabel();
+            }
 
             lblGameOver.Left = (this.ClientSize.Width - lblGameOver.Width) / 2;
             lblGameOver.Top = 250;
@@ -94,7 +132,6 @@ namespace FlappyBird
 
                 if (pipe.IsOffScreen())
                 {
-                    
                     Pipe last = pipes.OrderByDescending(p => p.Left).First();
                     pipe.Reset(last.Left + PipeSpacing, last.GapTop);
                 }
@@ -109,7 +146,8 @@ namespace FlappyBird
                 {
                     pipe.Passed = true;
                     game.AddScore();
-                    lblScore.Text = $"Skor: {game.Score}  Seviye: {game.Level}";
+                    UpdateScoreLabel();
+                    PlaySound(System.Media.SystemSounds.Asterisk);
                 }
             }
 
@@ -124,6 +162,10 @@ namespace FlappyBird
             if (e.KeyCode == Keys.Space && !game.IsGameOver)
             {
                 bird.Jump();
+            }
+            else if (e.KeyCode == Keys.M)
+            {
+                soundOn = !soundOn;
             }
         }
 

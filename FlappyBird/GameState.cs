@@ -10,6 +10,7 @@ public class GameState
     public int Level { get; private set; } = 1;
     public int Speed { get; private set; } = BaseSpeed;
     public bool IsGameOver { get; set; }
+    public int HighScore { get; set; }
 
     public void AddScore()
     {
