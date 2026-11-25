@@ -30,13 +30,13 @@
         {
             components = new System.ComponentModel.Container();
             picBird = new PictureBox();
-            pictGround = new PictureBox();
+            picGround = new PictureBox();
             lblScore = new Label();
             lblGameOver = new Label();
             btnRestart = new Button();
             gameTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)picBird).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictGround).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picGround).BeginInit();
             SuspendLayout();
             // 
             // picBird
@@ -48,14 +48,15 @@
             picBird.TabIndex = 0;
             picBird.TabStop = false;
             // 
-            // pictGround
+            // picGround
             // 
-            pictGround.BackColor = Color.SaddleBrown;
-            pictGround.Location = new Point(0, 582);
-            pictGround.Name = "pictGround";
-            pictGround.Size = new Size(500, 80);
-            pictGround.TabIndex = 1;
-            pictGround.TabStop = false;
+            picGround.BackColor = Color.SaddleBrown;
+            picGround.Location = new Point(0, 582);
+            picGround.Name = "picGround";
+            picGround.Size = new Size(500, 80);
+            picGround.TabIndex = 1;
+            picGround.TabStop = false;
+            picGround.Click += timer1_Tick;
             // 
             // lblScore
             // 
@@ -103,11 +104,11 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SkyBlue;
-            ClientSize = new Size(945, 653);
+            ClientSize = new Size(1074, 653);
             Controls.Add(btnRestart);
             Controls.Add(lblGameOver);
             Controls.Add(lblScore);
-            Controls.Add(pictGround);
+            Controls.Add(picGround);
             Controls.Add(picBird);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             KeyPreview = true;
@@ -115,7 +116,7 @@
             Name = "Form1";
             Text = "Flappy Bird ";
             ((System.ComponentModel.ISupportInitialize)picBird).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictGround).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picGround).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -123,7 +124,7 @@
         #endregion
 
         private PictureBox picBird;
-        private PictureBox pictGround;
+        private PictureBox picGround;
         private Label lblScore;
         private Label lblGameOver;
         private Button btnRestart;
