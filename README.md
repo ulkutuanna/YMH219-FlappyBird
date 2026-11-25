@@ -55,4 +55,4 @@ tabanlı bir yapı ile yönetmek.
 
 ## Hazırlayan
 
-[Ad Soyad] - [Öğrenci No]
+[Ülkü Tuana Kara] - [250541077]
